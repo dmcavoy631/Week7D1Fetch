@@ -25,19 +25,10 @@ const getAddressBook = () => {
 // this function logs the results to browsers console
 const consoleAddressBook = () => {
    console.log(contacts)
-  //  document.getElementById("Details").addEventListener("click",function() {
-  
-  //   if (this.button.innerHTML === "Contact details") {
-  //     this.button.innerHTML = `<li>${user.name.first}</li><li>${user.name.last}<li>${user.cell}</li><li> ${user.phone}</li><li>${(user.location.street.number,user.location.street.name)}<li>${user.location.city}</li><li> ${user.location.state}</li><li>${user.location.postcode}</li>`;
-  //   } else {
-  //     this.button.innerHTML = "Contact Details";
-  //   }
-  
-  // });
 }
 
 
-//  Loop Sho Details 
+//  Loop show details details method
 // function seeDetails(i){
 
 //    document.getElementById("details-"+i).create
@@ -55,7 +46,7 @@ const consoleAddressBook = () => {
 // Display contacts in flex box
 const displayContacts = (contacts) => {
   
-  //  OLD FOR LOOP
+  //  Code for loop, this was replace by the map... this seem render run faster.
     // for (let i = 0; i < contacts.results.length; i++){
     // document.getElementById('displayContacts').innerHTML += 
     // `<div id="img-${i}" > 
@@ -69,14 +60,16 @@ const displayContacts = (contacts) => {
     // </div>
     // </div>`;
 
-  // NEW MAP 
+  // MAP Method
     const allPosts = document.getElementById("displayContacts");
     contacts.map((user) => {
       
       const div = document.createElement("div");
       div.setAttribute("class", "contact")
+      
       const showImg = document.createElement("img");
       showImg.src = user.picture.large;
+
       const text = document.createElement("p");
       text.innerHTML = `${user.name.last}, ${user.name.first}`;
 
@@ -90,23 +83,17 @@ const displayContacts = (contacts) => {
       div.appendChild(button);
 
       button.onclick = function() {
-        const cDetails = this;
-
         if (this.innerHTML === "Contact Details") {
 
           let dob = new Date(user.dob.date);
 
-          cDetails.innerHTML = `<li>${user.name.first} ${user.name.last}<li>C: ${user.cell}</li><li>P: ${user.phone}</li><li>DOB: ${dob.toDateString()}</li><li>Addr: ${user.location.street.number,user.location.street.name}<li>City: ${user.location.city}</li><li>State: ${user.location.state}</li><li>Post: ${user.location.postcode}</li>`;
-          
+          this.innerHTML = `<li>${user.name.first} ${user.name.last}<li>C: ${user.cell}</li><li>P: ${user.phone}</li><li>DOB: ${dob.toDateString()}</li><li>Addr: ${user.location.street.number,user.location.street.name}<li>City: ${user.location.city}</li><li>State: ${user.location.state}</li><li>Post: ${user.location.postcode}</li>`;
+
         } else {
-          cDetails.innerHTML = "Contact Details";
+          this.innerHTML = "Contact Details";
         }
 
       };
 
     });
-
-
 }
-// 1975-03-14T13:10:08.045Z
-
