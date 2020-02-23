@@ -1,0 +1,30 @@
+#displayContacts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-between;
+  text-align: center;
+  width: 90%;
+}
+
+
+button{
+  display: block;
+  margin: auto;
+  border-radius: 3%;
+}
+
+p{
+  font-family: 'Courier New', Courier, monospace;
+}
+img{
+  border-radius: 5%;
+}
+body{
+  background-color: gray;
+}
+
+ul{
+  
+}
