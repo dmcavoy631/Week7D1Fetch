@@ -66,16 +66,16 @@ const displayContacts = (contacts) => {
       
       const div = document.createElement("div");
       div.setAttribute("class", "contact")
-      
-      const showImg = document.createElement("img");
-      showImg.src = user.picture.large;
 
-      const text = document.createElement("p");
-      text.innerHTML = `${user.name.last}, ${user.name.first}`;
+      const picture = document.createElement("img");
+      picture.src = user.picture.large;
+
+      const name = document.createElement("p");
+      name.innerHTML = `${user.name.last}, ${user.name.first}`;
 
       allPosts.append(div);
-      div.appendChild(text);
-      div.appendChild(showImg);
+      div.appendChild(name);
+      div.appendChild(picture);
       
       const button = document.createElement("button");
       button.setAttribute("id", "Details")
