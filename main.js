@@ -1,5 +1,11 @@
 
 
+// this function waits for the web page to be loaded, when it does it will run the code inside of it which happen to be getPosts()
+window.onload = function() {
+  getAddressBook()
+}
+
+
 
 // define array's
 let contacts = [];
@@ -10,73 +16,97 @@ const getAddressBook = () => {
     .then((response) => { return response.json()})
 
     .then((results) => {
-      contacts = results;
+      contacts = results.results;
       displayContacts(contacts);
+      
     })
 }
-
-// add anothe 100 contact to array.
-const addMore = () => {
-  fetch('https://randomuser.me/api/?results=100')
-  .then((response) => { return response.json()})
-
-  .then((results) => {
-    test.push(results)
-    console.log(results)
-  })
-}
-
 
 // this function logs the results to browsers console
 const consoleAddressBook = () => {
    console.log(contacts)
+  //  document.getElementById("Details").addEventListener("click",function() {
+  
+  //   if (this.button.innerHTML === "Contact details") {
+  //     this.button.innerHTML = `<li>${user.name.first}</li><li>${user.name.last}<li>${user.cell}</li><li> ${user.phone}</li><li>${(user.location.street.number,user.location.street.name)}<li>${user.location.city}</li><li> ${user.location.state}</li><li>${user.location.postcode}</li>`;
+  //   } else {
+  //     this.button.innerHTML = "Contact Details";
+  //   }
+  
+  // });
 }
 
 
+//  Loop Sho Details 
+// function seeDetails(i){
 
-function seeDetails(i){
-
-   document.getElementById("details-"+i).innerHTML +=
-  `<ul>
-  <li>P# ${contacts.results[i].phone}</li>
-  <li>C# ${contacts.results[i].cell}</li>
-  <li>DOB# ${contacts.results[i].dob}</li>
-  <li>${contacts.results[i].location.street} ${contacts.results[i].location.city} ${contacts.results[i].location.postcode} ${contacts.results[i].location.country}</li>
-  </ul>`
-  console.log(i)
-}
+//    document.getElementById("details-"+i).create
+//   `<div><ul>
+//   <li>P# ${contacts.results[i].phone}</li>
+//   <li>C# ${contacts.results[i].cell}</li>
+//   <li>DOB# ${contacts.results[i].dob}</li>
+//   <li>${contacts.results[i].location.street} ${contacts.results[i].location.city} ${contacts.results[i].location.postcode} ${contacts.results[i].location.country}</li>
+//   </ul>
+//   </div>`
+//   console.log("details-"+i)
+// }
 
 
 // Display contacts in flex box
 const displayContacts = (contacts) => {
-  for (let i = 0; i < contacts.results.length; i++){
-    document.getElementById('displayContacts').innerHTML += 
-    `<div id="img-${i}" > 
+  
+  //  OLD FOR LOOP
+    // for (let i = 0; i < contacts.results.length; i++){
+    // document.getElementById('displayContacts').innerHTML += 
+    // `<div id="img-${i}" > 
     
-    <p>"${contacts.results[i].name.first + " " + contacts.results[i].name.last}"</p> 
+    // <p>"${contacts.results[i].name.first + " " + contacts.results[i].name.last}"</p> 
 
-    <img src="${contacts.results[i].picture.large}" onclick="seeDetails(${i})">
+    // <img src="${contacts.results[i].picture.large}" onclick="seeDetails(${i})">
 
-    <div id='details-${i}'></div>
-    </div>`;
-  }
+    // <div id='details-${i}'>
+    // <button onclick="seeDetails(${i})">See Details</button>
+    // </div>
+    // </div>`;
+
+  // NEW MAP 
+    const allPosts = document.getElementById("displayContacts");
+    contacts.map((user) => {
+      
+      const div = document.createElement("div");
+      div.setAttribute("class", "contact")
+      const showImg = document.createElement("img");
+      showImg.src = user.picture.large;
+      const text = document.createElement("p");
+      text.innerHTML = `${user.name.last}, ${user.name.first}`;
+
+      allPosts.append(div);
+      div.appendChild(text);
+      div.appendChild(showImg);
+      
+      const button = document.createElement("button");
+      button.setAttribute("id", "Details")
+      button.innerHTML = "Contact Details";
+      div.appendChild(button);
+
+      button.onclick = function() {
+        const cDetails = this;
+
+        if (this.innerHTML === "Contact Details") {
+
+          let dob = new Date(user.dob.date);
+
+          cDetails.innerHTML = `<li>${user.name.first} ${user.name.last}<li>C: ${user.cell}</li><li>P: ${user.phone}</li><li>DOB: ${dob.toDateString()}</li><li>Addr: ${user.location.street.number,user.location.street.name}<li>City: ${user.location.city}</li><li>State: ${user.location.state}</li><li>Post: ${user.location.postcode}</li>`;
+          
+        } else {
+          cDetails.innerHTML = "Contact Details";
+        }
+
+      };
+
+    });
+
+
 }
+// 1975-03-14T13:10:08.045Z
 
-
-// this function waits for the web page to be loaded, when it does it will run the code inside of it which happen to be getPosts()
-window.onload = function() {
-  getAddressBook()
-}
-
-
-
-
-{/* <ul id = 'seeDetails' >
-<li>${" C# " + contacts.results[i].cell +
-" P# " + contacts.results[i].phone + 
-" DOB " + contacts.results[i].dob.date + 
-" Address " + contacts.results[i].location.street
-
-+ 
-+ contacts.results[i].location.postcode
-+ contacts.results[i].location.country}"</li */}
